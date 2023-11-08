@@ -1,5 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ResponseGetClientDto } from 'src/modules/client/dto';
+import {
+  ResponseGetCalendarDto,
+  ResponseGetClientDto,
+  ResponseGetProfileDto,
+} from 'src/modules/client/dto';
 
 export class ResponseGenericDto {
   @ApiProperty()
@@ -9,5 +13,5 @@ export class ResponseGenericDto {
   operation: string;
 
   @ApiProperty()
-  data: ResponseGetClientDto;
+  data: ResponseGetClientDto | ResponseGetProfileDto | ResponseGetCalendarDto;
 }

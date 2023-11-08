@@ -10,13 +10,10 @@ import { FnGetClientService, FnGetTypeClientService } from './services';
       {
         name: Clients.name,
         schema: ClientsSchema,
-      }
-    ])
+      },
+    ]),
   ],
   controllers: [ClientController],
-  providers: [
-    FnGetClientService,
-    FnGetTypeClientService
-  ],
+  providers: [FnGetClientService, FnGetTypeClientService],
 })
 export class ClientModule {}

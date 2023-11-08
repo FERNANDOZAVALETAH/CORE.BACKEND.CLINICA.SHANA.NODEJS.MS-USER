@@ -15,32 +15,31 @@ export class FnGetTypeClientService {
 
   constructor(
     @InjectModel(Clients.name)
-    private readonly clientModel: mongoose.Model<ClientsDocument>
+    private readonly clientModel: mongoose.Model<ClientsDocument>,
   ) {}
 
   async execute(igetClient: IGetClient): Promise<ResponseGenericDto> {
-    this.logger.debug(
-      `::execute::parameters::${JSON.stringify(igetClient)}`,
-    );
-    
-    if(igetClient.type != GENERAL.CLIENT.FIND.DNI)
-      throw new GetClientCustomException('Error en la opcion de busqueda, tipo no identificado');
-    
+    this.logger.debug(`::execute::parameters::${JSON.stringify(igetClient)}`);
+
+    if (igetClient.type != GENERAL.CLIENT.FIND.DNI)
+      throw new GetClientCustomException(
+        'Error en la opcion de busqueda, tipo no identificado',
+      );
+
     const client = await this.getClientByDni(igetClient.value);
 
     return <ResponseGenericDto>{
-      message: 'Processo exitoso',
+      message: 'PE: Proceso exitoso',
       operation: `::${FnGetTypeClientService.name}::execute`,
       data: <ResponseGetClientDto>{
         idUser: client._id,
         dni: client.dni,
         fisrtName: client.firstName,
         lastName: client.lastName,
-        telephone: client.telephone
+        telephone: client.telephone,
       },
     };
   }
-
 
   private async getClientByDni(dni: string): Promise<ClientsDocument> {
     try {
@@ -51,5 +50,4 @@ export class FnGetTypeClientService {
       throw new GetClientException();
     }
   }
-
 }

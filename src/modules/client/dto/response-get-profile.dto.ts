@@ -1,18 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class ResponseGetClientDto {
+export class ResponseGetProfileDto {
   @ApiProperty()
   idUser: string;
 
   @ApiProperty()
-  fisrtName: string;
+  firstName: string;
 
   @ApiProperty()
   lastName: string;
 
   @ApiProperty()
-  dni: string;
+  nickName: string;
 
   @ApiProperty()
-  telephone: string;
+  email: string;
+
+  @ApiProperty()
+  role: string;
 }

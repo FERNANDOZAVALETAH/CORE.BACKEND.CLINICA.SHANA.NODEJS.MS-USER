@@ -1,6 +1,7 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { Transport } from '@nestjs/microservices';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { GENERAL } from './const/general.const';
@@ -13,8 +14,21 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService);
 
+  const tcp = {
+    host: config.get('tcp.host', 'localhost'),
+    port: config.get('tcp.port', 30000),
+  };
+
   app.useGlobalFilters(new HttpCustomException(logger));
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
+
+  app.connectMicroservice({
+    transport: Transport.TCP,
+    options: {
+      host: config.get('tcp.host', 'localhost'),
+      port: config.get('tcp.port', 30000),
+    },
+  });
 
   const swaggerBasePath = config.get('swagger.basePath', '/api');
   const httpBasePath = config.get('http.basePath', '/api');
@@ -43,6 +57,7 @@ async function bootstrap() {
       'http.port',
     )}${swaggerBasePath}`,
   );
+  logger.log(`TCP server listening at host: ${tcp.host},  port: ${tcp.port}`);
 }
 
 void bootstrap();

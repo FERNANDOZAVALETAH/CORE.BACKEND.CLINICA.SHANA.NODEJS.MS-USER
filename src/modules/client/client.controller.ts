@@ -14,7 +14,7 @@ import { GetClientCustomException } from 'src/exception';
 export class ClientController {
   constructor(
     private readonly fnGetTypeClientService: FnGetTypeClientService,
-    private readonly fnGetClientService: FnGetClientService 
+    private readonly fnGetClientService: FnGetClientService,
   ) {}
 
   @UseGuards(ThrottlerGuard)
@@ -31,7 +31,10 @@ export class ClientController {
     description: 'Bad Request Server Exception.',
     type: GetClientCustomException,
   })
-  get(@Query('type') type: string, @Query('value') value: string): Promise<ResponseGenericDto> {
+  get(
+    @Query('type') type: string,
+    @Query('value') value: string,
+  ): Promise<ResponseGenericDto> {
     return this.fnGetTypeClientService.execute({ type, value });
   }
 
@@ -49,10 +52,7 @@ export class ClientController {
     description: 'Bad Request Server Exception.',
     type: GetClientCustomException,
   })
-  getById(
-    @Param('idUser') idUser: string 
-  ): Promise<ResponseGenericDto> {
+  getById(@Param('idUser') idUser: string): Promise<ResponseGenericDto> {
     return this.fnGetClientService.execute(idUser);
   }
-
 }

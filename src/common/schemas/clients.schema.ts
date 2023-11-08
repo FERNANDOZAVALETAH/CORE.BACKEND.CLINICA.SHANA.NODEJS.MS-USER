@@ -6,17 +6,16 @@ export type ClientsDocument = Clients & mongoose.Document;
 
 @Schema({ collection: SCHEMAS.CLIENTS, autoIndex: true })
 export class Clients {
-
   @Prop({ required: true })
   firstName: string;
 
-  @Prop({ })
+  @Prop({})
   lastName: string;
 
   @Prop({ required: true })
   dni: string;
 
-  @Prop({ })
+  @Prop({})
   telephone: string;
 
   @Prop({ required: true })
