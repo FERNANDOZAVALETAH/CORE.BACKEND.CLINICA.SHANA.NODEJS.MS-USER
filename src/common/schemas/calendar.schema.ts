@@ -22,6 +22,7 @@ export class Calendars {
     raw([
       {
         idEvent: mongoose.Schema.Types.ObjectId,
+        idConsulting: mongoose.Schema.Types.ObjectId,
         day: String,
         title: String,
         start: String,

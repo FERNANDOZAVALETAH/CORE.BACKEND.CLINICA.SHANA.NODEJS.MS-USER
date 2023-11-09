@@ -19,13 +19,14 @@ export class FnRegisterCalendarService {
         `::execute::parameters::${JSON.stringify(iregisterCalendar)}`,
       );
 
-      const { day, month, year, title, start, end, description, isConsulting } =
+      const { idConsulting, idUser, day, month, year, title, start, end, description, isConsulting } =
         iregisterCalendar;
 
       const calendar = await this.calendarModel.findOne({ year, month });
 
       const event: any = {
         idEvent: new mongoose.Types.ObjectId(),
+        idConsulting,
         title,
         day,
         description,
@@ -39,6 +40,7 @@ export class FnRegisterCalendarService {
         const events: any[] = [event];
 
         await this.calendarModel.create({
+          idUser: new mongoose.Types.ObjectId(idUser),
           month,
           year,
           events,
